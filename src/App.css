@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+.navbar{
+  padding:5px;
+  display:flex;
+  background-color: antiquewhite;
+}
+Link{
+  text-decoration: none;
+}
