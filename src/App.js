@@ -4,13 +4,21 @@ import HomePage from './HomePage';
 import Login from './Login';
 import Register from './Register';
 import NotFoundPage from './NotFoundPage';
+import globalStyles from './Constants';
+import appStyle from './AppStyle.module.css';
 import {Routes,Route, BrowserRouter,Link} from 'react-router-dom';
 
 
 function App() {
   return(
+    <>
+    {/* <img src={logo} alt='App Logo'/> */}
+    <img src={`${process.env.REACT_APP_URL}logo192.png`} alt='App Logo'/>
   <BrowserRouter> 
-  <div className='navbar'>
+  <div  
+  // style={{...globalStyles.navbar}}
+    className={appStyle.navbar}
+  >
   <Link to='/' style={{marginLeft:5}}>Home</Link>
   <Link to='/login' style={{marginLeft:10}}>Login</Link>
   <Link to='/register' style={{marginLeft:15}}>Register Now</Link>
@@ -24,6 +32,7 @@ function App() {
 
   </Routes>
   </BrowserRouter>
+  </>
   );
 
 }
