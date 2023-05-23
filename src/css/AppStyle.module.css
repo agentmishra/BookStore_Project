@@ -39,9 +39,13 @@
   .navbar{
     padding:5px;
     display:flex;
-    background-color: antiquewhite;
+    background-color: rgb(115, 146, 249);
     column-gap: 10px;
+    height:40px;
+    font-size: 20px;
+    font-weight:600;
   }
   Link{
     text-decoration: none;
+    
   }

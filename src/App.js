@@ -19,10 +19,10 @@ function App() {
   // style={{...globalStyles.navbar}}
     className={appStyle.navbar}
   > 
-  <Link to='/' style={{marginLeft:5}}>Home</Link>
-  <Link to='/login' style={{marginLeft:10}}>Login</Link>
-  <Link to='/register' style={{marginLeft:15}}>Register Now</Link>
-  <Link to='/error' style={{marginLeft:20}}>NotFoundPage</Link>
+  <Link to='/' style={{marginLeft:5}} className='link'>Home</Link>
+  <Link to='/login' style={{marginLeft:10}} className='link'>Login</Link>
+  <Link to='/register' style={{marginLeft:15}} className='link'>Register Now</Link>
+  <Link to='/error' style={{marginLeft:20}} className='link'>NotFoundPage</Link>
   </div>
   
   <Routes>
