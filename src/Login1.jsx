@@ -74,7 +74,6 @@ const Login=()=>{
         flexDirection:'column',
         rowGap:10
     }}>
-    <form>
     <TextField
      type='text'
      placeholder="Name" 
@@ -87,8 +86,7 @@ const Login=()=>{
     onChange={(e)=>setEmail(e.target.value)}
     label="Email" 
     value={email}/>
-    <Button variant="contained" type="submit">SUBMIT</Button>
-    </form>
+    <Button variant="contained" onClick={NavigateHome}>SUBMIT</Button>
     </div>
     </>);
 }
