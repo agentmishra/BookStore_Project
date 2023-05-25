@@ -1,0 +1,15 @@
+.center{
+    text-align: center;
+}
+.line{
+    width:30%;
+    margin-left: auto;
+    margin-right: auto;
+    color:black
+}
+.side-by-side{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}

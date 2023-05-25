@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './css/App.css';
-import HomePage from './HomePage';
-import Login from './Login';
-import Register from './Register';
-import NotFoundPage from './NotFoundPage';
-import globalStyles from './Constants';
+import HomePage from './Components/HomePage';
+import Login from './Components/Login';
+import Register from './Components/Register';
+import NotFoundPage from './Components/NotFoundPage';
+import globalStyles from './Components/Constants';
 import appStyle from './css/AppStyle.module.css';
 import {Routes,Route, BrowserRouter,Link} from 'react-router-dom';
 
