@@ -3,14 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Button from '@mui/material/Button';
 import { TextField } from "@mui/material";
-import { Avatar } from "@mui/material";
-import { Popover } from "@mui/material";
-import LogoutIcon from '@mui/icons-material/Logout';
+
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import axios from "axios";
+import { toast } from 'react-toastify';
 import '../css/myStyle.css'
 const Register = () => {
     const [name, setName] = useState("Dhruv Patel");
@@ -44,14 +43,27 @@ const Register = () => {
             "password":values.password,
             "confirmPd":values.confirmPd
         }
-    console.log(values);
         console.log("On Form Submit:", values);
         setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
         }, 400);
         alert("Form Submitted Successfully....");
-        axios.post("https://jsonplaceholder.typicode.com/posts",requestData);
+        axios.post("https://jsonplaceholder.typicode.com/posts",requestData).then((res)=>{
+            if(res.status==201){
+                console.log(res.data.id);
+                toast.success('🦄 API CALL Completed Successfully', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "light",
+                    });
+                
+            }
+        });
         
     }
     const NavigateHome = () => {
@@ -73,13 +85,13 @@ const Register = () => {
         <>
             <div style={{ padding: 5 }}></div>
             <div>
-                <div className="center">
+                <div className="center ">
                     <Button variant="text" onClick={()=>Navigate('/')}>Home</Button>
                     <span> | Create an Account</span>
                 </div>
                 <div>
                     <div className='center'>
-                        <h1>Login or Create An Account</h1>
+                        <h1 className="loginheader">Login or Create an Account</h1>
                         <hr className="line"/>
                     </div>
 
@@ -90,14 +102,14 @@ const Register = () => {
                 }}>
                     <h3>Personal Information</h3>
                     <hr/>
-                    <p>Please Enter the following information to create Your Account</p>
+                    <p className='paraStyle'>Please Enter the following information to create Your Account.</p>
                         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onFormSubmit}>
                             {({ value, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => {
                                 return (
                                     <form onSubmit={handleSubmit} >
                                         <div className='side-by-side'>
                                            <div>
-                                            <div>First Name* </div>
+                                            <div className='label'>First Name* </div>
                                             <TextField
                                                 type='text'
                                                 placeholder="FirstName"
@@ -113,7 +125,7 @@ const Register = () => {
                                             }}>{errors.firstName}</div>}
                                             </div> 
                                             <div >
-                                            <div>Last Name* </div>
+                                            <div className='label'>Last Name* </div>
                                             <TextField
                                                 type='text'
                                                 placeholder="LastName"
@@ -133,7 +145,7 @@ const Register = () => {
                                         <div style={{padding:5}}></div>
                                     <div className='side-by-side'>
                                         <div>
-                                            <div>Email Address* </div>
+                                            <div className='label'>Email Address* </div>
                                              <TextField
                                                 type='email'
                                                 placeholder='Email'
@@ -150,7 +162,7 @@ const Register = () => {
                                             </div>
 
                                             <div>
-                                            <div>Role</div>
+                                            <div className='label'>Role</div>
                                             <Select
                                             name='role'
                                             value={role}
@@ -178,7 +190,7 @@ const Register = () => {
                                         </div>
                                         <div className='side-by-side'>
                                                 <div>
-                                                <div>Password*</div>
+                                                <div className='label'>Password*</div>
                                                 <TextField
                                                 type='password'
                                                 placeholder='Password'
@@ -194,7 +206,7 @@ const Register = () => {
                                             }}>{errors.password}</div>}
                                             </div>
                                             <div>
-                                                <div>Confirm Password*</div>
+                                                <div className='label'>Confirm Password*</div>
                                                 <TextField
                                                 type='password'
                                                 placeholder='Confirm Password'
@@ -212,7 +224,7 @@ const Register = () => {
                                             </div>
                                         </div>
                                            <div style={{marginBottom:20}}></div>
-                                            <Button variant="contained" type="submit" disabled={isSubmitting} >Register</Button>
+                                            <Button variant="contained" type="submit" disabled={isSubmitting} className="btn">Register</Button>
                                        
                                     </form>
 

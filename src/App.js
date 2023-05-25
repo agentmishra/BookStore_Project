@@ -7,6 +7,8 @@ import NotFoundPage from './Components/NotFoundPage';
 import globalStyles from './Components/Constants';
 import appStyle from './css/AppStyle.module.css';
 import {Routes,Route, BrowserRouter,Link} from 'react-router-dom';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -14,6 +16,7 @@ function App() {
     <>
    {/* <img src={logo} alt='App Logo'/>  */}
     {/* <img src="http://localhost:3000/logo192.png"/>  */}
+  <ToastContainer />
   <BrowserRouter> 
   <div  
   // style={{...globalStyles.navbar}}

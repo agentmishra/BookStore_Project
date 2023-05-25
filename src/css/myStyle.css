@@ -1,11 +1,27 @@
 .center{
     text-align: center;
+    font-size: 18px;
+    color:#414141;
+}
+.loginheader{
+    font-size: 32px;
+    color:#414141
 }
 .line{
-    width:30%;
+    width:25%;
     margin-left: auto;
     margin-right: auto;
-    color:black
+    color:red
+}
+.paraStyle{
+    font-size: 15px;
+    font-style: 'roboto-light';
+    color:#838383
+}
+.label{
+    font-size:15px;
+    color:#414141;
+    margin-bottom: 10px;
 }
 .side-by-side{
     display: flex;
@@ -13,3 +29,11 @@
     align-items: center;
     justify-content: space-between;
 }
+.customer{
+    margin-top:12px;
+}
+.loginpart{
+    margin-top:23px;
+}
+
+
