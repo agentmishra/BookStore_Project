@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Customer=()=>{
     const Navigate = useNavigate('');
     return(<>
-    <div style={{fontSize:'20px',color:'#414141'}}>New Customer</div>
+    <div style={{fontSize:'20px',color:'#414141',fontWeight:'bold'}}>New Customer</div>
     <hr />
     <div style={{marginBottom:10, width:'500px'}}></div>
     <p className='paraStyle'>Registration free and easy.</p>
@@ -15,7 +15,7 @@ const Customer=()=>{
         <li style={{paddingBottom:'15px'}}>View and Track Orders and move</li>
     </ul>
     <div style={{marginBottom:'130px'}}></div>
-    <Button variant="contained" type="submit"className="btn" onClick={()=>Navigate('/register')}>Create an Account</Button>
+    <Button variant="contained" type="submit" sx={{height:'40px'}} onClick={()=>Navigate('/register')}>Create an Account</Button>
     </>
     );
 }

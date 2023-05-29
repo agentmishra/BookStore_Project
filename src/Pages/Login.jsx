@@ -2,22 +2,25 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Button from '@mui/material/Button';
-import Customer from "./Customer";
-import LoginUI from "./LoginUI";
+import Customer from "../Components/Customer";
+import LoginUI from "../Components/LoginUI";
+import '../css/myStyle.css';
+
+import Footer from "../Components/Footer";
 const Login = () => {
   const Navigate = useNavigate('');
   return (
     <>
-      <div style={{ padding: 5 }}></div>
+     
       <div>
-        <div className="center ">
-          <Button variant="text" onClick={() => Navigate('/')}>Home</Button>
-          <span> | Login</span>
+        <div className="center mainHeader">
+          <div className='HomeText'>Home </div>
+          <span style={{color:'#f14d54'}}>> Login</span>
         </div>
         <div>
           <div className='center'>
-            <h1 className="loginheader">Login or Create an Account</h1>
-            <hr className="line" />
+            <div className="loginheader">Login or Create an Account</div>
+            <hr color="red" width='15%' />
           </div>
         </div>
       </div>
@@ -27,6 +30,7 @@ const Login = () => {
           <div className="loginpart"><LoginUI /></div>
         </div>
         </div>
+        <Footer/>
       </>);
 }
 export default Login;

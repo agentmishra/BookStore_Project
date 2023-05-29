@@ -8,6 +8,8 @@ import { Popover } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import authService from '../service/auth.service';
+import { toast } from 'react-toastify';
 const LoginUI = () => {
  
   const [email, setEmail] = useState("");
@@ -21,16 +23,18 @@ const LoginUI = () => {
   }
   const validationSchema = Yup.object().shape({
     "email": Yup.string().email("Please Enter Valid Email").required("Please Enter Email"),
-    "password": Yup.string().min(8,"Password Must be a 8 Characters Long").required("Please Enter Password")
+    "password": Yup.string().min(8,"Password Must be a 8 Characters Long").matches(/[a-zA-Z]/,'Password Contains atleast one character').required("Please Enter Password")
   });
   const onFormSubmit = (values, { setSubmitting }) => {
-
-    console.log("On Form Submit:", values);
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
-    alert("Form Submitted Successfully....")
+    // authService.login(values).then((res)=>{
+    //   delete res._id;
+    //   delete res._v;
+    //   // authContext.setUser(res);
+    //   Navigate('/');
+    //   toast.success("Successfully Logged in...")
+    // })
+    Navigate('/');
+   toast.success("Successfully Logged in...")
   }
   const NavigateHome = () => {
     Navigate('/');
@@ -50,7 +54,7 @@ const LoginUI = () => {
   return (
     <>
      
-      <div style={{ fontSize: '20px', color: '#414141' }}>Registered Customers</div>
+      <div style={{ fontSize: '20px', color: '#414141',fontWeight:'bold'}}>Registered Customers</div>
       <hr />
       <div style={{ marginBottom: 10 }}></div>
       <p className='paraStyle'>If you have an account with us,Please log in.</p>
