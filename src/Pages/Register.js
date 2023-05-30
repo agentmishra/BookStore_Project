@@ -68,7 +68,8 @@ const Register = () => {
 
             }
         });
-
+        Navigate('/login');
+        
     }
     const NavigateHome = () => {
         Navigate('/');
@@ -88,7 +89,7 @@ const Register = () => {
             <div>
                 <div className="center mainHeader">
                     <div className='HomeText'>Home </div>
-                    <span style={{ color: '#f14d54' }}>> Create an Account</span>
+                    <span style={{ color: '#f14d54' }}>  &gt; Create an Account</span>
                 </div>
                 <div>
                     <div className='center'>
@@ -170,25 +171,12 @@ const Register = () => {
                                                 id={"roleId"}
                                                 onBlur={handleBlur}
                                                 style={{ width: '355px' }}
-                                                // onChange={(e)=>{setRoleId(e.target.value);
-                                                // console.log(e)}
-                                                // }   
                                                 onChange={handleChange}
-                                                onBlur={handleBlur}
+                                                
                                             >
-                                            <MenuItem value='1'></MenuItem>
-                                            <MenuItem value='2'>Buyer</MenuItem>
-                                            <MenuItem value='3'>Seller</MenuItem>
-                                               {/* {roleList.length > 0 &&
-                                               roleList.map((role)=>(
-                                                <MenuItem value={role.id} key={"name" + role.id}>
-                                                    {role.name}
-                                                </MenuItem>
-                                               )
-
-                                               
-                                               )}  */}
-                                               
+                                            <MenuItem value='0'></MenuItem>
+                                            <MenuItem value='1'>Buyer</MenuItem>
+                                            <MenuItem value='2'>Seller</MenuItem>
                                             </Select>
                                             </FormControl>
                                         </div>

@@ -26,15 +26,14 @@ const LoginUI = () => {
     "password": Yup.string().min(8,"Password Must be a 8 Characters Long").matches(/[a-zA-Z]/,'Password Contains atleast one character').required("Please Enter Password")
   });
   const onFormSubmit = (values, { setSubmitting }) => {
-    // authService.login(values).then((res)=>{
-    //   delete res._id;
-    //   delete res._v;
-    //   // authContext.setUser(res);
-    //   Navigate('/');
-    //   toast.success("Successfully Logged in...")
-    // })
+    authService.login(values).then((res)=>{
+      delete res._id;
+      delete res._v;
+      // authContext.setUser(res);
+      Navigate('/');
+      toast.success("Successfully Logged in...")
+    });
     Navigate('/');
-   toast.success("Successfully Logged in...")
   }
   const NavigateHome = () => {
     Navigate('/');
