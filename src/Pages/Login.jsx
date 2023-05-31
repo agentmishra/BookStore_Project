@@ -9,13 +9,14 @@ import '../css/myStyle.css';
 import Footer from "../Components/Footer";
 const Login = () => {
   const Navigate = useNavigate('');
+  
   return (
     <>
      
       <div>
         <div className="center mainHeader">
           <div className='HomeText'>Home </div>
-          <span style={{color:'#f14d54'}}>> Login</span>
+          <span style={{color:'#f14d54'}}>&gt; Login</span>
         </div>
         <div>
           <div className='center'>

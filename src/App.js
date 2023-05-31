@@ -5,12 +5,15 @@ import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Cart from './Pages/Cart';
 import NotFoundPage from './Pages/NotFoundPage';
+import ProductPage from './Pages/ProductPage';
+import EditBook from './Pages/EditBook';
 import globalStyles from './Components/Constants';
 import appStyle from './css/AppStyle.module.css';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './Components/Header';
+import LoginProvider from './contexts/Loginprovider';
 
 
 
@@ -19,7 +22,7 @@ function App() {
   // const Redirect=<Navigate to='/login'/>;
   return (
     <>
-      
+      <LoginProvider>
       <ToastContainer />
       <BrowserRouter>
         {/* <div
@@ -38,9 +41,13 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>
           <Route path='/cart' element={<Cart />}></Route>
+          <Route path='/product' element={<ProductPage/>}></Route>
+          <Route path='/edit' element={<EditBook/>}></Route>
           <Route path='*' element={<NotFoundPage />}></Route>
         </Routes>
       </BrowserRouter>
+      </LoginProvider>
+      
       
     </>);
 
