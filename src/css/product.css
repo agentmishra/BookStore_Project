@@ -27,3 +27,6 @@
     width:70%;
     height:400px;
 }
+.MuiButton-outlined{
+    border-color: rgb(73, 173, 73);
+}

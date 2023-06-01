@@ -52,7 +52,7 @@ const UpdateNav = () => {
                     <span className='pipe'></span>
                     <Link to='/edit' style={LinkStyle} >Edit Book</Link>
                     <span className='pipe'></span>
-                    <Link to='/login' style={LinkStyle}>Login</Link>
+                    <Link to='/bookList' style={LinkStyle}>Book List</Link>
                     <span className='pipe'></span>
                     <Link to='/register' style={LinkStyle} >Register</Link>
                     

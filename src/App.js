@@ -7,6 +7,7 @@ import Cart from './Pages/Cart';
 import NotFoundPage from './Pages/NotFoundPage';
 import ProductPage from './Pages/ProductPage';
 import EditBook from './Pages/EditBook';
+import BookList from './Pages/BookList';
 import globalStyles from './Components/Constants';
 import appStyle from './css/AppStyle.module.css';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
@@ -43,6 +44,7 @@ function App() {
           <Route path='/cart' element={<Cart />}></Route>
           <Route path='/product' element={<ProductPage/>}></Route>
           <Route path='/edit' element={<EditBook/>}></Route>
+          <Route path='/bookList' element={<BookList/>}></Route>
           <Route path='*' element={<NotFoundPage />}></Route>
         </Routes>
       </BrowserRouter>
