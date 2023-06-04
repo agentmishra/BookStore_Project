@@ -70,7 +70,7 @@ const ProductPage = () => {
       .then((res) => {
         toast.success("Record Deleted Successfully...");
         setOpen(false);
-        setFilters({ ...filters, pageIndex: 1 });
+        setFilters({ ...filters});
       });
 
   };

@@ -9,9 +9,10 @@ import { loginContext } from '../contexts/LoginContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useContext } from 'react';
+import { useAuthContext } from '../contexts/auth';
 const LoginUI = () => {
-  const isLogin=useContext(loginContext);
- 
+  const authContext = useAuthContext();
+  const {login,setLogin}=useContext(loginContext);
   const [email, setEmail] = useState("");
   const[password,setPassword]=useState('');
   const [open, setOpen] = useState(false);
@@ -35,9 +36,13 @@ const LoginUI = () => {
     if(res.status===200){
       console.log(res.data.id);
       toast.success('Login Successfully');
+      authContext.setUser(res);
+      
+
     }
-    Navigate('/');
-    isLogin.setLogin(true);
+   setLogin(true);
+    Navigate('/booklist');
+
     };
   
   const NavigateHome = () => {

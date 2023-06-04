@@ -1,2 +1,19 @@
 import { createContext } from "react";
-export const loginContext=createContext();
+const intialValues = {
+    id: 0,
+    email: "",
+    firstName: "",
+    lastName: "",
+    roleId: 0,
+    role: "",
+    password: "",
+  };
+  
+  const initialState = {
+    setUser: () => {},
+    user: intialValues,
+    signOut: () => {},
+    appInitialize: false,
+  };
+export const loginContext=createContext(initialState);
+

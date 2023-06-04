@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useContext } from 'react';
+import '../css/header.css';
+import '../css/myStyle.css';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Button from '@mui/material/Button';
@@ -9,29 +11,25 @@ import { Field, Formik } from 'formik';
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from 'react-toastify';
-import '../css/myStyle.css';
-const Register = () => {
-    const [role, setRole] = useState('');
-    const[roleId,setRoleId]=useState(0);
-    const [open, setOpen] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
+import { loginContext } from '../contexts/LoginContext';
+const UpdateProfile=()=>{
     const Navigate = useNavigate('');
+    const { user } = useContext(loginContext);
     const api_url='https://book-e-sell-node-api.vercel.app/api/user';
     const initialValues = {
-        firstName: '',
+        firstName:'',
         lastName: '',
         email: '',
-        password: '',
-        roleId:0
-      
-        
+        newPassword: "",
+        confirmPassword: ""
     }
+    const [updatePassword, setUpdatePassword] = useState(false);
     const validationSchema = Yup.object().shape({
-        "firstName": Yup.string().min(3, "First Name Must be 3 characters long...").max(10).trim('The firstName cannot include leading and trailing spaces').required("Please Enter Your First Name"),
-        "lastName": Yup.string().min(3, "Last Name must be 3 characters long...").max(10).trim('The lastName cannot include leading and trailing spaces').required('Please Enter Your Last Name'),
-        "email": Yup.string().email("Please Enter Valid Email").trim('The email cannot include leading and trailing spaces').required('please Enter your Email ID'),
-        "password": Yup.string().min(8, "Password Must be 8 Characters Long...").matches(/[a-zA-Z]/, 'Password Contains atleast one character').required('Please Enter Your Password'),
-        "confirmPd": Yup.string().required('Please Enter Confirm Password').oneOf([Yup.ref('password'), null], 'Passwords must match'),
+        firstName: Yup.string().min(3, "First Name Must be 3 characters long...").max(10).trim('The firstName cannot include leading and trailing spaces').required("Please Enter Your First Name"),
+        lastName: Yup.string().min(3, "Last Name must be 3 characters long...").max(10).trim('The lastName cannot include leading and trailing spaces').required('Please Enter Your Last Name'),
+        email: Yup.string().email("Please Enter Valid Email").trim('The email cannot include leading and trailing spaces').required('please Enter your Email ID'),
+        newPassword: Yup.string().min(8, "Password Must be 8 Characters Long...").matches(/[a-zA-Z]/, 'Password Contains atleast one character').required('Please Enter Your Password'),
+        confirmPassword: Yup.string().required('Please Enter Confirm Password').oneOf([Yup.ref('password'), null], 'Passwords must match'),
     
         
     });
@@ -70,40 +68,18 @@ const Register = () => {
         Navigate('/login');
         
     }
-    const NavigateHome = () => {
-        Navigate('/');
-    }
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-        setOpen(false);
-    };
-    return (
-        <>
-
-            <div>
-                <div className="center mainHeader">
-                    <div className='HomeText'>Home </div>
-                    <span style={{ color: '#f14d54' }}>  &gt; Create an Account</span>
-                </div>
-                <div>
+    return(<>
+         <div>
                     <div className='center'>
-                        <h1 className="loginheader">Login or Create an Account</h1>
+                        <h1 className="loginheader">Update Profile</h1>
                         <hr color="red" width='15%' />
                     </div>
-
-                </div>
-                <div style={{
-                    width: '50%',
+        </div>
+        <div style={{marginBottom:'15px'}}></div>
+        <div style={{
+                    width: '60%',
                     margin: 'auto',
                 }}>
-                    <h3>Personal Information</h3>
-                    <hr />
-                    <p className='paraStyle'>Please Enter the following information to create Your Account.</p>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onFormSubmit}>
                         {({ value, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => {
                             return (
@@ -115,7 +91,7 @@ const Register = () => {
                                                 type='text'
                                                 placeholder="First Name"
                                                 name="firstName"
-                                                style={{ width: '355px' }}
+                                                style={{ width: '430px' }}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                             />
@@ -131,7 +107,7 @@ const Register = () => {
                                                 type='text'
                                                 placeholder="Last Name"
                                                 name="lastName"
-                                                style={{ width: '355px' }}
+                                                style={{ width: '430px' }}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                             />
@@ -150,7 +126,7 @@ const Register = () => {
                                             <TextField
                                                 type='email'
                                                 placeholder='Email'
-                                                style={{ width: '355px' }}
+                                                style={{ width: '430px' }}
                                                 onChange={handleChange}
                                                 name="email"
                                                 onBlur={handleBlur}
@@ -161,73 +137,47 @@ const Register = () => {
                                                 marginBottom: 5
                                             }}>{errors.email}</div>}
                                         </div>
-
                                         <div>
-                                        <FormControl>
-                                            <div className='label'>Role</div>
-                                            <Select
-                                                name="roleId"
-                                                id={"roleId"}
-                                                onBlur={handleBlur}
-                                                style={{ width: '355px' }}
-                                                onChange={handleChange}
-                                                
-                                            >
-                                            <MenuItem value='0'></MenuItem>
-                                            <MenuItem value='1'>Buyer</MenuItem>
-                                            <MenuItem value='2'>Seller</MenuItem>
-                                            </Select>
-                                            </FormControl>
-                                        </div>
-                                    </div>
-
-                                    <div style={{
-                                        display: "flex",
-                                        flexDirection: 'column',
-                                        marginBottom: 5,
-                                        rowGap: 10
-                                    }}>
-                                        <div>
-                                            <h3>Login Information</h3>
-                                            <hr />
-                                        </div>
-                                        <div className='side-by-side'>
-                                            <div>
-                                                <div className='label'>Password*</div>
+                                                <div className='label'>New Password*</div>
                                                 <TextField
                                                     type='password'
-                                                    placeholder='Password'
-                                                    style={{ width: '355px' }}
+                                                    placeholder='Enter New Password'
+                                                    style={{ width: '430px' }}
                                                     onChange={handleChange}
-                                                    name="password"
+                                                    name="newPassword"
                                                     onBlur={handleBlur}
                                                 />
-                                                {errors.password && touched.password && <div style={{
+                                                {errors.newPassword && touched.newPassword && <div style={{
                                                     color: 'red',
                                                     fontSize: 15,
                                                     marginBottom: 5
-                                                }}>{errors.password}</div>}
+                                                }}>{errors.newPassword}</div>}
                                             </div>
-                                            <div>
+
+
+                                    </div>
+                                    <div className='side-by-side'>
+                                        <div>
+                                        <div>
                                                 <div className='label'>Confirm Password*</div>
                                                 <TextField
                                                     type='password'
                                                     placeholder='Confirm Password'
                                                     onChange={handleChange}
-                                                    style={{ width: '355px' }}
-                                                    name="confirmPd"
+                                                    style={{ width: '430px' }}
+                                                    name="confirmPassword"
                                                     onBlur={handleBlur}
                                                 />
-                                                {errors.confirmPd && touched.confirmPd && <div style={{
+                                                {errors.confirmPassword && touched.confirmPassword && <div style={{
                                                     color: 'red',
                                                     fontSize: 15,
                                                     marginBottom: 5
-                                                }}>{errors.confirmPd}</div>}
+                                                }}>{errors.confirmPassword}</div>}
                                             </div>
                                         </div>
                                     </div>
                                     <div style={{ marginBottom: 20 }}></div>
-                                    <Button variant="contained" type="submit" disabled={isSubmitting} className="btn">Register</Button>
+                                    <Button variant="contained" type="submit" disabled={isSubmitting} className="btn">Update</Button>
 
                                 </form>
 
@@ -237,10 +187,8 @@ const Register = () => {
                     </Formik>
 
                 </div>
-            </div>
-         
+            
+    </>);
 
-
-        </>);
 }
-export default Register;
+export default UpdateProfile;

@@ -5,8 +5,6 @@ import Button from '@mui/material/Button';
 import Customer from "../Components/Customer";
 import LoginUI from "../Components/LoginUI";
 import '../css/myStyle.css';
-
-import Footer from "../Components/Footer";
 const Login = () => {
   const Navigate = useNavigate('');
   
@@ -31,7 +29,7 @@ const Login = () => {
           <div className="loginpart"><LoginUI /></div>
         </div>
         </div>
-        <Footer/>
+        
       </>);
 }
 export default Login;
