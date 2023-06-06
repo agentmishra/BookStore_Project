@@ -1,0 +1,112 @@
+.cart-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+    font-weight:500,
+}  
+h2{
+    padding-bottom:0;
+    margin-bottom:0;
+    font-size:18px
+}
+.total-price{
+   font-size: 20px;
+}
+.cart-list-wrapper{
+   margin:0px 0px 35px;
+}
+.cart-list-item{
+    display: "flex";
+    justify-content: space-between;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding:15px;
+    border-radius:5px
+}
+.cart-item-img{
+    max-width: 150px;
+    flex:0px 0px 150px;
+    min-height:"100px"
+}
+/* a{
+    display: block;
+    position: relative;
+    height: "100%";
+    cursor:pointer, 
+} */
+.img{
+    position: "absolute";
+    left: "0";
+    top: "0";
+    height: "100%";
+    width: "100% ";
+    object-fit:"cover"
+}
+.cart-item-content{
+    flex:"1";
+    padding-left:"20px"
+}
+.cart-item-top-content{
+    display:"flex";
+    justify-content: "space-between";
+    margin:"0 0 10px",
+}
+.cart-item-left{
+    margin-right:"10px",
+}
+/* .cart-item-left a{
+    color:red;
+    text-decoration: none;
+    cursor:pointer
+} */
+/* .price-block span{
+    display:"block",
+} */
+.price-block .current-price{
+    font-weight:"700";
+    text-align:"right"
+}
+.actual-price{
+    color:red;
+    display:"flex"
+}
+.actual-price span{
+    text-decoration:"line-through",
+}
+.actual-price em{
+    color:red;
+    margin-left:10px;
+    font-weight:"600"
+}
+.cart-item-bottom-content{
+    display:"flex";
+    justify-content: "space-between",
+}
+/* .cart-item-bottom-content a{
+    color:red;
+    text-decoration:"none";
+    cursor:"pointer"
+} */
+.qty-group{
+    display:"flex",
+}
+.cartbt{
+    min-width:"20px";
+    padding:"0";
+    height:"20px";
+    line-height:"20px"
+}
+.number-count{
+    border:"1px solid #ccc";
+    display:"inline-block";
+    min-Width:"20px";
+    text-align:"center";
+    line-height:"20px";
+    height:"20px";
+    margin:"0 10px";
+}
+.brand{
+    font-size:"16px";
+    font-weight:"700";
+    margin-bottom:"2px",
+}

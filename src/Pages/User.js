@@ -84,7 +84,7 @@ const User = () => {
             </div>
             <div className='searchContainer'>
                 <input type='search' placeholder='search' className='productSearch'></input>
-                <button type='submit' className='productbtn' onClick={() => Navigate('/edit-user')}>Add User</button>
+                <button type='submit' className='productbtn' onClick={() => Navigate('/register')}>Add User</button>
             </div>
             <div style={{ marginBottom: '45px' }}></div>
             <div style={{ margin: 'auto', width: '90%' }}>

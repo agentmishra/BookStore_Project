@@ -1,41 +1,47 @@
 import React from 'react';
 import '../css/header.css';
 import { useNavigate } from "react-router-dom";
-import { useState, useParams, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import { FormControl, TextField } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { Formik } from 'formik';
+import { useParams } from 'react-router-dom';
+import { useContext } from 'react';
 
 import * as Yup from "yup";
 import userService from '../service/user.service';
 import axios from "axios";
 import { toast } from 'react-toastify';
 import '../css/myStyle.css';
+import { useAuthContext , AuthContext} from '../contexts/auth';
 
 const EditUser = () => {
-    const Navigate = useNavigate('');
+    const authContext=useAuthContext();
+    const Navigate = useNavigate();
     const [roles, setRoles] = useState([]);
     const [user, setUser] = useState();
+    const { userData } = useContext(AuthContext);
   
 
 
     const initialValues = {
         id: 0,
         firstName: '',
-        lastName: '',
+        lastName:'',
         email: '',
-        roleId: 0
+        roleId: 3
     }
     const [initialValueState, setInitialValueState] = useState(initialValues);
-    const  {id} =useParams();
+    const  { id } =useParams(); 
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().min(3, "First Name Must be 3 characters long...").max(10).trim('The firstName cannot include leading and trailing spaces').required("Please Enter Your First Name"),
         lastName: Yup.string().min(3, "Last Name must be 3 characters long...").max(10).trim('The lastName cannot include leading and trailing spaces').required('Please Enter Your Last Name'),
         email: Yup.string().email("Please Enter Valid Email").trim('The email cannot include leading and trailing spaces').required('please Enter your Email ID'),
         roleId: Yup.number().required("Role ID is required")
     });
+
     useEffect(() => {
         userService.getAllRoles().then((res) => {
             if (res) {
@@ -45,13 +51,14 @@ const EditUser = () => {
       }, []);
 
       useEffect(() => {
-        if (Number(id)) {
+        if (id) {
             userService.getById(Number(id)).then((res) => {
                 if (res) {
                   setUser(res);
                 }
               });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [id]);
       useEffect(() => {
         if (user && roles.length) {
@@ -68,7 +75,19 @@ const EditUser = () => {
       }, [user, roles]);
     const onFormSubmit = (values) => {
      console.log(values);
-    }
+     const updatedValue = {
+        ...values,
+        role: roles.find((r) => r.id === values.roleId).name,
+      };
+      userService
+      .update(updatedValue)
+      .then((res) => {
+        if (res) {
+          toast.success("User Role Updated Successfully");
+          Navigate("/user");
+        }
+      })
+    };
     return (
         <>
             <div>
@@ -90,6 +109,7 @@ const EditUser = () => {
                                             type='text'
                                             placeholder="First Name"
                                             name="firstName"
+                                            variant='outlined'
                                             style={{ width: '355px' }}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -106,6 +126,7 @@ const EditUser = () => {
                                             type='text'
                                             placeholder="Last Name"
                                             name="lastName"
+                                            
                                             style={{ width: '355px' }}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -137,7 +158,9 @@ const EditUser = () => {
                                         }}>{errors.email}</div>}
                                     </div>
                                         
-                                    <div>
+                                    
+                                        <>
+                                        <div>
                                         <FormControl>
                                             <div className='label'>Role</div>
                                             <Select
@@ -153,6 +176,10 @@ const EditUser = () => {
                                             </Select>
                                         </FormControl>
                                     </div>
+
+                                        </>
+                                    
+                                    
                                 </div>
                                 <div style={{ marginBottom: 40 }}></div>
                                 <button className='savebtn' type='submit'>Save</button>

@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useParams } from 'react-router-dom';
+import { useState } from "react";
 import bookService from '../service/book.service';
 import categoryService from '../service/category.service';
 import Button from '@mui/material/Button';
@@ -13,69 +16,99 @@ import { toast } from 'react-toastify';
 import { useContext } from 'react';
 import '../css/header.css';
 import '../css/myStyle.css';
-import { useNavigate, useParams } from 'react-router-dom';
+const AddBook = () => {
 
-const EditBook=()=>{
-    const initialValues = {
-        name: "",
-        description: "",
-        price: "",
-        categoryId: 0,
-        base64image: "",
-     };
-     const Navigate = useNavigate();
-     const [initialValueState, setInitialValueState] = useState(initialValues);
-     const [categories, setCategories] = useState([]);
-     const { id } = useParams();
-  
-     const validationSchema = Yup.object().shape({
-        name: Yup.string().required("Book Name is required"),
-        description: Yup.string().required("Description is required"),
-        categoryId: Yup.number()
-           .min(1, "Minimum One Category is required")
-           .required("Category is required"),
-        price: Yup.number().required("Price is required"),
-        base64image: Yup.string().required("Image is required"),
-     });
-     const onSubmit=()=>{
+   const initialValues = {
+      name: "",
+      description: "",
+      price: "",
+      categoryId: 0,
+      base64image: "",
+   };
+   const Navigate = useNavigate();
+   const [initialValueState, setInitialValueState] = useState(initialValues);
+   const [categories, setCategories] = useState([]);
+   const { id } = useParams();
 
-     }
-     const onSelectFile = (e, setFieldValue, setFieldError) => {
-        const files = e.target.files;
-        if (files?.length) {
-           const fileSelected = e.target.files[0];
-           const fileNameArray = fileSelected.name.split(".");
-           const extension = fileNameArray.pop();
-           if (["png", "jpg", "jpeg"].includes(extension?.toLowerCase())) {
-              if (fileSelected.size > 10000) {
-                 toast.error("File size must be less then 10KB");
-                 return;
-              }
-              const reader = new FileReader();
-              reader.readAsDataURL(fileSelected);
-              reader.onload = function () {
-                 setFieldValue("base64image", reader.result);
-              };
-              reader.onerror = function (error) {
-                 throw error;
-              };
-           } else {
-              toast.error("only jpg,jpeg and png files are allowed");
-           }
-        } else {
-           setFieldValue("base64image","");
-        }
-     }
-    return(
-        <>
-            <div>
-                <div className='center'>
-                    <div className="loginheader">Edit Book</div>
-                    <hr color="red" width='15%' />
-                </div>
-            </div>
-            <div style={{ marginBottom: '45px' }}></div>
-            <div style={{ margin: 'auto', width: '60%' }}>
+   const validationSchema = Yup.object().shape({
+      name: Yup.string().required("Book Name is required"),
+      description: Yup.string().required("Description is required"),
+      categoryId: Yup.number()
+         .min(1, "Minimum One Category is required")
+         .required("Category is required"),
+      price: Yup.number().required("Price is required"),
+      base64image: Yup.string().required("Image is required"),
+   });
+   const getBookById = () => {
+      bookService.getById(Number(id)).then((res) => {
+         setInitialValueState({
+            id: res.id,
+            name: res.name,
+            price: res.price,
+            categoryId: res.categoryId,
+            description: res.description,
+            base64image: res.base64image,
+         });
+      });
+   };
+   useEffect(() => {
+      if (id) getBookById();
+      categoryService.getAll().then((res) => {
+         setCategories(res);
+      });
+   }, [id]);
+   const onSubmit = async (values) => {
+      console.log(values);
+      const getBooks = {
+         name: values.name,
+         description: values.description,
+         price: values.price,
+         categoryId: values.categoryId,
+         base64image: values.base64image,
+      }
+      const res = await axios.post('https://book-e-sell-node-api.vercel.app/api/book', getBooks);
+      if (res.status === 200) {
+         console.log(res.data.id);
+         toast.success('Record Inserted Successfully');
+      }
+      Navigate('/product');
+     
+   };
+   const onSelectFile = (e, setFieldValue, setFieldError) => {
+      const files = e.target.files;
+      if (files?.length) {
+         const fileSelected = e.target.files[0];
+         const fileNameArray = fileSelected.name.split(".");
+         const extension = fileNameArray.pop();
+         if (["png", "jpg", "jpeg"].includes(extension?.toLowerCase())) {
+            if (fileSelected.size > 10000) {
+               toast.error("File size must be less then 10KB");
+               return;
+            }
+            const reader = new FileReader();
+            reader.readAsDataURL(fileSelected);
+            reader.onload = function () {
+               setFieldValue("base64image", reader.result);
+            };
+            reader.onerror = function (error) {
+               throw error;
+            };
+         } else {
+            toast.error("only jpg,jpeg and png files are allowed");
+         }
+      } else {
+         setFieldValue("base64image","");
+      }
+   }
+
+   return (
+      <>
+         <div className='center'>
+            <div className="loginheader">Add Product</div>
+            <hr color="red" width='15%' />
+         </div>
+         <div style={{ marginBottom: '50px' }}></div>
+         <div style={{ margin: 'auto', width: '60%' }}>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                {({ value, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit, setFieldValue, setFieldError }) => {
                   return (
@@ -196,8 +229,9 @@ const EditBook=()=>{
                }
             </Formik>
          </div>
-        </>
-    );
 
-}
-export default EditBook;
+
+      </>
+   )
+};
+export default AddBook;
