@@ -1,9 +1,16 @@
 /* css for Search Box */
-.searchContainer{
+.dropDown{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
 
 }
 
-
+.titleWrapper{
+    display: flex;
+    flex-direction: space-between;
+    align-items: center;
+}
 
 /* css for Cards */
 .cards{
@@ -74,4 +81,19 @@
   .cartbtn:hover{
     background-color: #e81620;
   }
+
+  .paginationWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .paginationWrapper .MuiPagination-ul .MuiPaginationItem-page.Mui-selected {
+    background-color: #f14d54;
+    color: #fff;
+  }
+  .paginationWrapper .MuiPagination-ul .MuiPaginationItem-page:hover {
+    background-color: rgba(241, 77, 84, 0.7);
+    color: #fff;
+  }
+
     

@@ -80,7 +80,7 @@ const UpdateProfile = () => {
                                     <TextField
                                         type='text'
                                         placeholder="First Name"
-                                        
+                                        value={user.firstName}
                                         name="firstName"
                                         style={{ width: '430px' }}
                                         onBlur={handleBlur}

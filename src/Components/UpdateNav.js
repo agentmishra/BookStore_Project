@@ -4,11 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Button } from '@mui/material';
 import { toast } from 'react-toastify';
+
 import '../css/header.css';
 import { useAuthContext } from '../contexts/auth';
+import { useCartContext } from '../contexts/cartContext';
 
 const UpdateNav = () => {
     const authcontext=useAuthContext();
+    const cartContext=useCartContext();
     const Navigate=useNavigate();
     const LinkStyle = {
         textDecoration: 'none',
@@ -32,6 +35,7 @@ const UpdateNav = () => {
     }
     const logoutEvent=()=>{
         authcontext.signOut();
+        cartContext.emptyCart();
     }
     if (!authcontext.user.id) {
         return (
@@ -41,6 +45,12 @@ const UpdateNav = () => {
                     <span className='pipe'></span>
                     <Link to='/register' style={LinkStyle} >Register</Link>
                 </div>  
+                <Link to='/cart' style={cart}>
+                    <ShoppingCartIcon style={{ color: "#f14d54" }} />
+                    <span style={{ color: "#f14d54" }}>{cartContext.cartData.length}</span>
+                    Cart
+                </Link>
+        
             </>
         );
         
@@ -49,17 +59,18 @@ const UpdateNav = () => {
         return(
         <>
                 <div>
-                    <Link to='/product' style={LinkStyle}>View Book</Link>
-                    <span className='pipe'></span>
-                    <Link to='/add-book' style={LinkStyle} >Add Book</Link>
-                    <span className='pipe'></span>
-                    <Link to='/bookList' style={LinkStyle}>Book List</Link>
+                    <Link to='/product' style={LinkStyle}>Book</Link>
                     <span className='pipe'></span>
                     <Link to='/user' style={LinkStyle}>User</Link>
                     <span className='pipe'></span>
                     <Link to='/update-profile' style={LinkStyle}>Update Profile</Link>
-                    
-                    </div>
+                </div>
+                    <Link to='/cart' style={cart}>
+                    <ShoppingCartIcon style={{ color: "#f14d54" }} />
+                    <span style={{ color: "#f14d54" }}>{cartContext.cartData.length}</span>
+                    Cart
+                   </Link>
+                <div style={{marginRight:'50px'}}></div>
                 
                 <Button style={logoutbtn} onClick={logoutEvent} variant='contained'>Logout</Button>
                

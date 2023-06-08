@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/header.css';
 import '../css/card.css';
 import '../css/header.css';
-import { Typography, Grid, TextField, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
+import { Typography, Grid, TextField, FormControl, Select, MenuItem,InputLabel, Pagination } from '@mui/material';
 import { useState, useMemo } from 'react';
 import { useEffect } from 'react';
 import {useAuthContext} from '../contexts/auth';
@@ -21,12 +21,16 @@ const BookList = () => {
     pageIndex: 1,
     pageSize: 10,
   };
-  const [bookRecords, setBookRecords] = useState([]);
-  const [totalItems, setTotalItems] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [selectedId, setSelectedId] = useState(0);
+  const [bookRecords,setBookRecords]=useState({
+    pageIndex:0,
+    pageSize:10,
+    totalPages:1,
+    items:[],
+    totalItems:0
+  });
   const [sortBy, setSortBy] = useState();
-  const [filters, setFilters] = useState(defaultFilter);
+  const [filters,setFilters]=useState(defaultFilter);
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     categoryService.getAll().then((res) => {
       if (res) {
@@ -35,14 +39,44 @@ const BookList = () => {
     });
 
   }, []);
-  useEffect((filters) => {
-    axios.get('https://book-e-sell-node-api.vercel.app/api/book/all',filters).then((res) => {
-      if (res.status == 200) {
-        console.log(res.data.result);
-        setBookRecords(res.data.result);
-      }
-    })
+  const searchAllBooks=(filters)=>{
+        bookService.getAll(filters).then((res)=>{
+          setBookRecords(res);
+        });
+  }
+  useEffect(() => {
+   searchAllBooks({...filters});
+   
   }, [filters]);
+
+  const books = useMemo(() => {
+    const bookList = [...bookRecords.items];
+    if (bookList) {
+      bookList.forEach((element) => {
+        element.category = categories.find(
+          (a) => a.id === element.categoryId
+        )?.name;
+      });
+      return bookList;
+    }
+    return [];
+  }, [categories, bookRecords]);
+   
+  
+  const sortBooks = (e) => {
+    setSortBy(e.target.value);
+    const bookList=[...bookRecords.items];
+    bookList.sort((a, b) => {
+      if (a.name < b.name) {
+        return e.target.value === "a-z" ? -1 : 1;
+      }
+      if (a.name > b.name) {
+        return e.target.value === "a-z" ? 1 : -1;
+      }
+      return 0;
+    });
+    setBookRecords({...bookRecords,items:bookList});
+  };
   const addToCart = (book) => {
     Shared.addtoCart(book, authContext.user.id).then((res) => {
       if (res.error) {
@@ -60,12 +94,20 @@ const BookList = () => {
         <hr color="red" width='15%' />
       </div>
     </div>
-    <div style={{ marginBottom: '30px' }}></div>
-
-    <div className='dropDown'>
+    <div style={{ marginBottom: '45px' }}></div>
+    <div style={{marginLeft:'160px'}}>
+    <Typography variant='h4'>
+      Total
+      <span> - {bookRecords.totalItems} items</span>
+    </Typography>
+    </div>
+    
+    <div className='titleWrapper'>
+    <div style={{marginLeft:'550px'}}></div>
+    <div className='titleWrapper'>
     <TextField
               id="text"
-              className="dropDown"
+              style={{width:'450px'}}
               name="text"
               placeholder="Search..."
               variant="outlined"
@@ -77,19 +119,25 @@ const BookList = () => {
                 });
               }}
             />
-    </div>
-    {/* <FormControl className='DropDown' variant='ourlined'>
-    <InputLabel htmlFor='select'>Sort By</InputLabel>
-    <Select
-              //  onChange={sortBooks}
-              // value={sortBy}
+            <div style={{marginRight:'300px'}}></div>
+            <FormControl className="dropdown-wrapper" variant="outlined">
+            <InputLabel htmlFor="select">Sort By</InputLabel>
+            <Select
+            style={{width:'200px'}}
+            onChange={sortBooks}
+            value={sortBy}
             >
               <MenuItem value="a-z">a - z</MenuItem>
               <MenuItem value="z-a">z - a</MenuItem>
             </Select>
-          </FormControl> */}
+          </FormControl>
+          </div>
+            </div>
+            <div style={{ marginBottom: '15px' }}></div>
 
-    {bookRecords.map((items) => {
+     <div style={{margin:'auto',width:'80%'}}>      
+
+    {books.map((items) => {
       return (
        
         <div className='cards'>
@@ -108,6 +156,16 @@ const BookList = () => {
        
         );
     })}
+    <div className='paginationWrapper'>
+      <Pagination
+        count={bookRecords.totalPages}
+        page={filters.pageIndex}
+        onChange={(e,newPage)=>{
+          setFilters({...filters,pageIndex:newPage});
+        }}
+      />
+    </div>
+    </div> 
   </>
   );
 

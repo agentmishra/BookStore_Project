@@ -83,7 +83,13 @@ const User = () => {
                 </div>
             </div>
             <div className='searchContainer'>
-                <input type='search' placeholder='search' className='productSearch'></input>
+                <input type='search'
+                 placeholder='search'
+                  className='productSearch'
+                  onChange={(e) => {
+                  setFilters({ ...filters, keyword: e.target.value, pageIndex: 1 });
+            }}
+                  />
                 <button type='submit' className='productbtn' onClick={() => Navigate('/register')}>Add User</button>
             </div>
             <div style={{ marginBottom: '45px' }}></div>
@@ -120,7 +126,7 @@ const User = () => {
                                                 variant="outlined"
                                                 disableElevation
                                                 onClick={() => {
-                                                    Navigate('/edit-user');
+                                                    Navigate(`/edit-user/${row.id}`);
                                                 }}
                                             >
                                                 Edit

@@ -22,10 +22,6 @@ const EditUser = () => {
     const Navigate = useNavigate();
     const [roles, setRoles] = useState([]);
     const [user, setUser] = useState();
-    const { userData } = useContext(AuthContext);
-  
-
-
     const initialValues = {
         id: 0,
         firstName: '',
@@ -49,14 +45,13 @@ const EditUser = () => {
             }
           });
       }, []);
-
-      useEffect(() => {
+     useEffect(() => {
         if (id) {
             userService.getById(Number(id)).then((res) => {
                 if (res) {
                   setUser(res);
                 }
-              });
+              });  
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [id]);
@@ -98,7 +93,7 @@ const EditUser = () => {
             </div>
             <div style={{ marginBottom: '45px' }}></div>
             <div style={{ margin: 'auto', width: '60%' }}>
-                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onFormSubmit}>
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onFormSubmit} validator={() => ({})}>
                     {({ value, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => {
                         return (
                             <form onSubmit={handleSubmit} >
@@ -110,6 +105,7 @@ const EditUser = () => {
                                             placeholder="First Name"
                                             name="firstName"
                                             variant='outlined'
+                                            // value={value.firstName}
                                             style={{ width: '355px' }}
                                             onBlur={handleBlur}
                                             onChange={handleChange}

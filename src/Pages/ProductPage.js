@@ -41,10 +41,10 @@ const ProductPage = () => {
   const [open, setOpen] = useState(false);
   const Navigate = useNavigate();
   const columns = [
-    { id: "id", label: "ID", width: 70 },
-    { id: "name", label: "Book Name", width: 70 },
-    { id: "price", label: "Price", width: 70 },
-    { id: "category", label: "Category", width: 70 },
+    { id: "id", label: "ID", width: 70},
+    { id: "name", label: "Book Name", width: 80 },
+    { id: "price", label: "Price", width:70},
+    { id: "category", label: "Category", width:70},
   ];
   // Rendering all Categories of the Book
   useEffect(() => {
@@ -84,11 +84,16 @@ const ProductPage = () => {
     </div>
     <div style={{ marginBottom: '45px' }}></div>
     <div className='searchContainer'>
-      <input type='search' placeholder='search' className='productSearch'></input>
+      <input type='search'
+       placeholder='search'
+        className='productSearch'
+        onChange={(e) => {
+              setFilters({ ...filters, keyword: e.target.value, pageIndex: 1 });
+            }}></input>
       <button type='submit' className='productbtn' onClick={() => Navigate('/add-book')}>Add Product</button>
     </div>
     <div style={{ marginBottom: '32px' }}></div>
-    <div style={{ margin: 'auto', width: '80%' }}>
+    <div style={{ margin: 'auto', width: '70%' }}>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
@@ -117,12 +122,12 @@ const ProductPage = () => {
                   <TableCell>
                     <Button
                       type="button"
-                      className="green-btn btn"
+                      sx={{width:'100px'}}
                       color='success'
                       variant="outlined"
                       disableElevation
                       onClick={() => {
-                        Navigate('/edit-book');
+                        Navigate(`/edit-book/${row.id}`);
                       }}
                     >
                       Edit
@@ -130,7 +135,6 @@ const ProductPage = () => {
                     <span style={{ marginRight: '20px' }}></span>
                     <Button
                       type="button"
-                      className="btn pink-btn"
                       variant="outlined"
                       disableElevation
                       onClick={() => {
