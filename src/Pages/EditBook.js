@@ -109,20 +109,19 @@ const EditBook = () => {
          </div>
          <div style={{ marginBottom: '50px' }}></div>
          <div style={{ margin: 'auto', width: '60%' }}>
-            <Formik initialValues={initialValueState} validationSchema={validationSchema} onSubmit={onSubmit}>
-               {({ value, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit, setFieldValue, setFieldError }) => 
+            <Formik initialValues={initialValueState} validationSchema={validationSchema} onSubmit={onSubmit}  enableReinitialize={true}>
+               {({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit, setFieldValue, setFieldError }) => 
                    (
                      <form onSubmit={handleSubmit} >
                         <div className='side-by-side'>
                            <div>
                               <div className='label'>Book Name* </div>
-                              <TextField
-                                
+                              <TextField 
                                  type='text'
                                  placeholder="Book Name"
                                  name="name"
                                  style={{ width: '430px' }}
-                                 value={value?.name}
+                                 value={values.name}
                                  onBlur={handleBlur}
                                  onChange={handleChange}
                               />
@@ -139,7 +138,7 @@ const EditBook = () => {
                                  placeholder="Book Price"
                                  name="price"
                                  style={{ width: '430px' }}
-                                 value={value?.price}
+                                 value={values.price}
                                  onBlur={handleBlur}
                                  onChange={handleChange}
                               />
@@ -156,11 +155,11 @@ const EditBook = () => {
                               <FormControl variant="outlined">
                                  <div className='label'>Shop By Categories*</div>
                                  <Select
-                                    name="categoryId"
-                                    id="categoryId"
+                                    name={"categoryId"}
+                                    id={"categoryId"}
                                     onChange={handleChange}
                                     style={{ width: '430px' }}
-                                    value={value?.categoryId}
+                                    value={values.categoryId}
                                     
                                  >
                                     {categories?.map((props) => (
@@ -178,8 +177,10 @@ const EditBook = () => {
                                  placeholder="Description"
                                  name="description"
                                  style={{ width: '430px' }}
+                                 value={values.description}
                                  onBlur={handleBlur}
                                  onChange={handleChange}
+                                 multiline
                               />
                               {errors.description && touched.description && <div style={{
                                  color: 'red',
@@ -191,7 +192,8 @@ const EditBook = () => {
 
                         <div style={{ marginBottom: '40px' }}></div>
                         <div >
-                        
+                        {!values.base64image && (
+                           <>
                         <label
                         htmlFor="contained-button-file"
                         className="file-upload-btn"
@@ -210,6 +212,24 @@ const EditBook = () => {
                               fontSize: 15,
                               marginBottom: 5
                            }}>{errors.base64image}</div>}
+                           </>
+                        )}
+                        {values.base64image && (
+                     <div className="uploaded-file-name">
+                      <em>
+                        <img src={values.base64image} alt="" />
+                      </em>
+                      image{" "}
+                      <span
+                        onClick={() => {
+                          setFieldValue("base64image", "");
+                        }}
+                      >
+                        x
+                      </span>
+                    </div>
+                  )}
+                     
                         </div>
                         <div style={{ marginBottom: '35px' }}></div>
                         <button className='savebtn' type='submit'>Save</button>

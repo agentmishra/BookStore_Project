@@ -9,28 +9,27 @@ import Select from '@mui/material/Select';
 import { Formik } from 'formik';
 import { useParams } from 'react-router-dom';
 import { useContext } from 'react';
-
 import * as Yup from "yup";
 import userService from '../service/user.service';
 import axios from "axios";
 import { toast } from 'react-toastify';
 import '../css/myStyle.css';
-import { useAuthContext , AuthContext} from '../contexts/auth';
+import { useAuthContext, AuthContext } from '../contexts/auth';
 
 const EditUser = () => {
-    const authContext=useAuthContext();
+    const authContext = useAuthContext();
     const Navigate = useNavigate();
     const [roles, setRoles] = useState([]);
     const [user, setUser] = useState();
     const initialValues = {
         id: 0,
         firstName: '',
-        lastName:'',
+        lastName: '',
         email: '',
         roleId: 3
     }
     const [initialValueState, setInitialValueState] = useState(initialValues);
-    const  { id } =useParams(); 
+    const { id } = useParams();
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().min(3, "First Name Must be 3 characters long...").max(10).trim('The firstName cannot include leading and trailing spaces').required("Please Enter Your First Name"),
         lastName: Yup.string().min(3, "Last Name must be 3 characters long...").max(10).trim('The lastName cannot include leading and trailing spaces').required('Please Enter Your Last Name'),
@@ -41,47 +40,46 @@ const EditUser = () => {
     useEffect(() => {
         userService.getAllRoles().then((res) => {
             if (res) {
-              setRoles(res);
+                setRoles(res);
             }
-          });
-      }, []);
-     useEffect(() => {
+        });
+    }, []);
+    useEffect(() => {
         if (id) {
             userService.getById(Number(id)).then((res) => {
                 if (res) {
-                  setUser(res);
+                    setUser(res);
                 }
-              });  
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [id]);
-      useEffect(() => {
+    }, [id]);
+    useEffect(() => {
         if (user && roles.length) {
-          const roleId = roles.find((role) => role.name === user?.role)?.id;
-          setInitialValueState({
-            id: user.id,
-            email: user.email,
-            lastName: user.lastName,
-            firstName: user.firstName,
-            roleId,
-            password: user.password,
-          });
+            const roleId = roles.find((role) => role.name === user?.role)?.id;
+            setInitialValueState({
+                id: user.id,
+                email: user.email,
+                lastName: user.lastName,
+                firstName: user.firstName,
+                roleId,
+                password: user.password,
+            });
         }
-      }, [user, roles]);
-    const onFormSubmit = (values) => {
-     console.log(values);
-     const updatedValue = {
-        ...values,
-        role: roles.find((r) => r.id === values.roleId).name,
-      };
-      userService
-      .update(updatedValue)
-      .then((res) => {
+    }, [user, roles]);
+    const onFormSubmit = async (values) => {
+        console.log(values);
+        const updatedValue = {
+            ...values,
+            role: roles.find((r) => r.id === values.roleId).name,
+        };
+
+        const res = await userService.update(updatedValue);
         if (res) {
-          toast.success("User Role Updated Successfully");
-          Navigate("/user");
+            console.log(res);
+            toast.success("User Updated Successfully");
+            Navigate("/user");
         }
-      })
     };
     return (
         <>
@@ -93,8 +91,8 @@ const EditUser = () => {
             </div>
             <div style={{ marginBottom: '45px' }}></div>
             <div style={{ margin: 'auto', width: '60%' }}>
-                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onFormSubmit} validator={() => ({})}>
-                    {({ value, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => {
+                <Formik initialValues={initialValueState} validationSchema={validationSchema} onSubmit={onFormSubmit} enableReinitialize={true}>
+                    {({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => {
                         return (
                             <form onSubmit={handleSubmit} >
                                 <div className='side-by-side'>
@@ -104,8 +102,8 @@ const EditUser = () => {
                                             type='text'
                                             placeholder="First Name"
                                             name="firstName"
+                                            value={values.firstName}
                                             variant='outlined'
-                                            // value={value.firstName}
                                             style={{ width: '355px' }}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -122,7 +120,7 @@ const EditUser = () => {
                                             type='text'
                                             placeholder="Last Name"
                                             name="lastName"
-                                            
+                                            value={values.lastName}
                                             style={{ width: '355px' }}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -145,6 +143,7 @@ const EditUser = () => {
                                             style={{ width: '355px' }}
                                             onChange={handleChange}
                                             name="email"
+                                            value={values.email}
                                             onBlur={handleBlur}
                                         />
                                         {errors.email && touched.email && <div style={{
@@ -153,36 +152,46 @@ const EditUser = () => {
                                             marginBottom: 5
                                         }}>{errors.email}</div>}
                                     </div>
-                                        
-                                    
+
+                                    {values.id !== authContext.user.id && (
                                         <>
-                                        <div>
-                                        <FormControl>
-                                            <div className='label'>Role</div>
-                                            <Select
-                                                name="roleId"
-                                                id={"roleId"}
-                                                onBlur={handleBlur}
-                                                style={{ width: '355px' }}
-                                                onChange={handleChange}
-                                            >
-                                                <MenuItem value='0'></MenuItem>
-                                                <MenuItem value='1'>Buyer</MenuItem>
-                                                <MenuItem value='2'>Seller</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </div>
+                                            <div>
+                                                <FormControl disabled={values.id == authContext.user.id}>
+                                                    <div className='label'>Role</div>
+                                                    <Select
+                                                        name="roleId"
+                                                        id={"roleId"}
+                                                        value={values.roleId}
+                                                        disabled={values.id == authContext.user.id}
+                                                        onBlur={handleBlur}
+                                                        style={{ width: '355px' }}
+                                                        onChange={handleChange}
+                                                    >
+                                                        {roles.length > 0 &&
+                                                            roles.map((role) => (
+                                                                <MenuItem value={role.id} >
+                                                                    {role.name}
+                                                                </MenuItem>
+                                                            ))}
+                                                    </Select>
+                                                </FormControl>
+                                            </div>
 
                                         </>
-                                    
-                                    
+
+                                    )
+
+                                    }
+
+
+
                                 </div>
                                 <div style={{ marginBottom: 40 }}></div>
                                 <button className='savebtn' type='submit'>Save</button>
                                 <button
                                     className='cancel btn'
                                     type='button'
-                                    onClick={()=>{Navigate('/user')}}
+                                    onClick={() => { Navigate('/user') }}
                                 >
                                     Cancel
                                 </button>
