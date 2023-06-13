@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import Button from '@mui/material/Button';
+import React from "react";
 import Customer from "../Components/Customer";
 import LoginUI from "../Components/LoginUI";
 import '../css/myStyle.css';
 const Login = () => {
-  const Navigate = useNavigate('');
-  
   return (
     <>
      

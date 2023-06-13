@@ -28,17 +28,17 @@ const NavigationItems = [
   {
     name: "Users",
     route: "/user",
-    access: [Role.Admin],
+    access: [Role.Admin,Role.Seller]
   },
-  // {
-  //   name: "Categories",
-  //   route: "/category",
-  //   access: [Role.Admin],
-  // },
+  {
+    name: "Categories",
+    route: "/category",
+    access: [Role.Admin,Role.Seller],
+  },
   {
     name: "Books",
     route: '/product',
-    access: [Role.Admin, Role.Seller],
+    access: [Role.Admin, Role.Seller,Role.Buyer],
   },
   {
     name: "Update Profile",

@@ -1,20 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import Button from '@mui/material/Button';
 import { FormControl, TextField } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { Field, Formik } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import '../css/myStyle.css';
 const Register = () => {
-    const [role, setRole] = useState('');
-    const[roleId,setRoleId]=useState(0);
-    const [open, setOpen] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
     const Navigate = useNavigate('');
     const api_url='https://book-e-sell-node-api.vercel.app/api/user';
     const initialValues = {
@@ -70,18 +65,6 @@ const Register = () => {
         Navigate('/login');
         
     }
-    const NavigateHome = () => {
-        Navigate('/');
-    }
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-        setOpen(false);
-    };
     return (
         <>
 

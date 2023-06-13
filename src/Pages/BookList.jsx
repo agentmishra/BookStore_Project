@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/header.css';
 import '../css/card.css';
 import '../css/header.css';
-import { Typography, Grid, TextField, FormControl, Select, MenuItem,InputLabel, Pagination } from '@mui/material';
+import { Typography, TextField, FormControl, Select, MenuItem,InputLabel, Pagination } from '@mui/material';
 import { useState, useMemo } from 'react';
 import { useEffect } from 'react';
 import {useAuthContext} from '../contexts/auth';
@@ -10,7 +10,6 @@ import {useCartContext} from '../contexts/cartContext';
 import Shared from "../utils/Shared";
 import bookService from '../service/book.service';
 import categoryService from '../service/category.service';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 
 

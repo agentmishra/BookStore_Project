@@ -142,31 +142,30 @@ const Cart=()=>{
                   <div className="cart-item-top-content">
                     <div className="cart-item-left">
                       <p className="brand">{cartItem.book.name}</p>
-                      <Link>Cart item name</Link>
+                  
                     </div>
                     <div className="price-block">
                       <span className="current-price">
-                        MRP &#8377; {cartItem.book.price}
+                        MRP &#8377; <b>{cartItem.book.price}</b>
                       </span>
                     </div>
                   </div>
                   <div className="cart-item-bottom-content">
                     <div className="qty-group">
-                      <Button
-                        className="btn pink-btn"
+                      <Button  
                         onClick={(e) => updateQuantity(cartItem, true, e)}
                       >
                         +
                       </Button>
                       <span className="number-count">{cartItem.quantity}</span>
                       <Button
-                        className="cartbt pink-btn"
+                        
                         onClick={(e) => updateQuantity(cartItem, false, e)}
                       >
                         -
                       </Button>
                     </div>
-                    <Link onClick={() => removeItem(cartItem.id)}>Remove</Link>
+                    <Button onClick={() => removeItem(cartItem.id)}>Remove</Button>
                   </div>
                 </div>
               </div>

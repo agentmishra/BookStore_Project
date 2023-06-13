@@ -9,6 +9,7 @@ import BookList from './Pages/BookList';
 import User from './Pages/User';
 import EditUser from './Pages/EditUser';
 import EditBook from './Pages/EditBook';
+import EditCategory from './Pages/EditCategory';
 import globalStyles from './Components/Constants';
 import appStyle from './css/AppStyle.module.css';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
@@ -23,6 +24,7 @@ import UpdateProfile from './Pages/UpdateProfile';
 import { loginContext } from './contexts/LoginContext';
 import loader from '../src/assets/Loader-Icon.gif';
 import '../src/css/loader.css';
+import Category from './Pages/Category';
 
 export const MainNavigation = () => {
   const user = useAuthContext().user
@@ -39,6 +41,9 @@ export const MainNavigation = () => {
         <Route exact path='/bookList' element={user.id ? <BookList /> : Redirect}></Route>
         <Route exact path='/user' element={user.id ? <User /> : Redirect}></Route>
         <Route exact path='/edit-user/:id' element={user.id ? <EditUser /> : Redirect}></Route>
+        <Route exact path='/category' element={user.id ? <Category /> : Redirect}></Route>
+        <Route exact path='/add-category' element={user.id ? <EditCategory /> : Redirect}></Route>
+        <Route exact path='/edit-category/:id' element={user.id ? <EditCategory /> : Redirect}></Route>
         <Route exact path='/update-profile' element={user.id ? <UpdateProfile /> : Redirect}></Route>
         <Route exact path='*' element={user.id ? <NotFoundPage /> : Redirect}></Route>
     </Routes>

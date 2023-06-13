@@ -2,19 +2,16 @@ import React from 'react';
 import '../css/header.css';
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Button from '@mui/material/Button';
 import { FormControl, TextField } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { Formik } from 'formik';
 import { useParams } from 'react-router-dom';
-import { useContext } from 'react';
 import * as Yup from "yup";
 import userService from '../service/user.service';
-import axios from "axios";
 import { toast } from 'react-toastify';
 import '../css/myStyle.css';
-import { useAuthContext, AuthContext } from '../contexts/auth';
+import { useAuthContext } from '../contexts/auth';
 
 const EditUser = () => {
     const authContext = useAuthContext();

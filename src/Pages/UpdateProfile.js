@@ -4,14 +4,10 @@ import '../css/myStyle.css';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Button from '@mui/material/Button';
-import { FormControl, TextField } from "@mui/material";
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import { Field, Formik } from 'formik';
+import {  TextField } from "@mui/material";
+import { Formik } from 'formik';
 import * as Yup from "yup";
-import axios from "axios";
 import { toast } from 'react-toastify';
-import { loginContext } from '../contexts/LoginContext';
 import { AuthContext, useAuthContext } from '../contexts/auth';
 import userService from '../service/user.service';
 const UpdateProfile = () => {
